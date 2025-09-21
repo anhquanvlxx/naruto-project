@@ -555,28 +555,51 @@
                     keyStatusMessage.textContent = "Key đã hết hạn.";
                     keyStatusMessage.className = "text-center text-sm mt-2 text-red-400";
                     validKeysRef.child(enteredKey).remove();
-                } else if (keyData.uid && keyData.uid !== currentDeviceUID) {
-                    keyStatusMessage.textContent = "Key này đã được sử dụng trên một thiết bị khác.";
-                    keyStatusMessage.className = "text-center text-sm mt-2 text-red-400";
                 } else {
-                    validKeysRef.child(enteredKey).update({
-                        used: true,
-                        uid: currentDeviceUID
-                    });
+                    const devices = keyData.devices || {};
+                    const deviceCount = Object.keys(devices).length;
+                    
+                    if (devices[currentDeviceUID]) {
+                        // Key đã được sử dụng trên thiết bị này, chỉ cập nhật thời gian dùng gần nhất
+                        validKeysRef.child(enteredKey).child('devices').child(currentDeviceUID).update({
+                            lastUsed: now
+                        });
+                        keyStatusMessage.textContent = "Key hợp lệ! Đang mở menu chính...";
+                        keyStatusMessage.className = "text-center text-sm mt-2 text-green-400";
+                        localStorage.setItem('valid_key', enteredKey);
+                        localStorage.setItem('key_expiry', keyData.expiry);
 
-                    keyStatusMessage.textContent = "Key hợp lệ! Đang mở menu chính...";
-                    keyStatusMessage.className = "text-center text-sm mt-2 text-green-400";
-                    localStorage.setItem('valid_key', enteredKey);
-                    localStorage.setItem('key_expiry', keyData.expiry);
+                        setTimeout(() => {
+                            keyPanel.classList.add('hidden');
+                            mainPanel.classList.remove('hidden');
+                            showMessage("Chào mừng đến với NARUTO SHIPPUDEN!");
+                            updateDeviceInfo();
+                            requestAnimationFrame(updateFpsCounter);
+                            updateKeyExpiry();
+                        }, 1000);
+                    } else if (deviceCount < keyData.max_devices) {
+                        // Kích hoạt key cho thiết bị mới
+                        validKeysRef.child(enteredKey).child('devices').child(currentDeviceUID).set({
+                            lastUsed: now
+                        });
 
-                    setTimeout(() => {
-                        keyPanel.classList.add('hidden');
-                        mainPanel.classList.remove('hidden');
-                        showMessage("Chào mừng đến với NARUTO SHIPPUDEN!");
-                        updateDeviceInfo();
-                        requestAnimationFrame(updateFpsCounter);
-                        updateKeyExpiry();
-                    }, 1000);
+                        keyStatusMessage.textContent = "Key hợp lệ! Đang mở menu chính...";
+                        keyStatusMessage.className = "text-center text-sm mt-2 text-green-400";
+                        localStorage.setItem('valid_key', enteredKey);
+                        localStorage.setItem('key_expiry', keyData.expiry);
+
+                        setTimeout(() => {
+                            keyPanel.classList.add('hidden');
+                            mainPanel.classList.remove('hidden');
+                            showMessage("Chào mừng đến với NARUTO SHIPPUDEN!");
+                            updateDeviceInfo();
+                            requestAnimationFrame(updateFpsCounter);
+                            updateKeyExpiry();
+                        }, 1000);
+                    } else {
+                        keyStatusMessage.textContent = `Key này đã đạt giới hạn ${keyData.max_devices} thiết bị được sử dụng.`;
+                        keyStatusMessage.className = "text-center text-sm mt-2 text-red-400";
+                    }
                 }
             }).catch(error => {
                 loadingSpinner.classList.add('hidden');
@@ -597,7 +620,7 @@
                     const now = Date.now();
                     const currentDeviceUID = getDeviceUID();
 
-                    if (keyData && keyData.uid === currentDeviceUID && keyData.expiry > now) {
+                    if (keyData && keyData.devices && keyData.devices[currentDeviceUID] && keyData.expiry > now) {
                         keyPanel.classList.add('hidden');
                         mainPanel.classList.remove('hidden');
                         requestAnimationFrame(updateFpsCounter);
