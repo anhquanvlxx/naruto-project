@@ -29,9 +29,10 @@
         .bottom-nav button { background-color: transparent; border: none; color: #e0e0e0; padding: 0.75rem 1rem; font-size: 0.875rem; font-weight: bold; transition: color 0.2s; cursor: pointer; }
         .bottom-nav button:hover { color: #ff0000; }
         .naruto-logo { width: auto; height: 60px; margin: 0 auto 0.5rem auto; }
+        .scrollable-content { overflow-y: auto; max-height: calc(100vh - 150px); /* Adjust height as needed */ }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen p-4">
+<body class="flex flex-col items-center justify-start min-h-screen p-4">
     <div id="message-box" class="hidden">
         <div class="overlay"></div>
         <div class="message-box">
@@ -70,184 +71,186 @@
     </div>
 
     <div id="main-panel" class="panel-bg rounded-3xl p-6 w-full max-w-lg hidden">
-        <div class="text-center mb-8">
-            <img src="https://i.postimg.cc/4NFC1Kpc/IMG-2417.jpg" alt="Naruto Shippuden Logo" class="naruto-logo">
-            <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">
-                NARUTO SHIPPUDEN
-            </h1>
-            <p class="text-gray-400 text-sm mt-2">PANNEL CỦA NARUTO SHIPPUDEN</p>
-        </div>
-
-        <div class="mb-8 p-4 bg-[#282828] rounded-2xl border border-[#333333] text-center">
-            <h2 class="text-xl font-semibold mb-4 text-red-300">Khởi chạy game</h2>
-            <div class="flex items-center justify-center space-x-4 mb-4">
-                <img id="game-icon" src="https://i.postimg.cc/N0LYBt0W/IMG-2291.jpg" alt="Logo Garena Free Fire" class="h-10 w-10 md:h-12 md:w-12 rounded-lg transform hover:scale-110 transition-transform duration-300">
-            </div>
-            <button id="open-game-button" class="main-button text-white font-extrabold w-full py-4 rounded-full flex items-center justify-center space-x-2">
-                <span id="button-text" class="text-lg">Tối ưu</span>
-                <div id="loading-spinner" class="loading-spinner hidden"></div>
-            </button>
-        </div>
-
-        <div class="mb-8 p-4 bg-[#282828] rounded-2xl border border-[#333333] space-y-3">
-            <p class="text-gray-300 flex justify-between items-center">
-                <span class="font-medium">Thiết Bị:</span>
-                <span id="device-info" class="text-sm text-red-300 font-bold">...</span>
-            </p>
-            <p class="text-gray-300 flex justify-between items-center">
-                <span class="font-medium">UID:</span>
-                <span id="uid-info" class="text-sm text-red-300 font-bold">...</span>
-            </p>
-            <p class="text-gray-300 flex justify-between items-center">
-                <span class="font-medium">Pin:</span>
-                <span id="battery-info" class="text-sm text-red-300 font-bold">...</span>
-            </p>
-            <p class="text-gray-300 flex justify-between items-center">
-                <span class="font-medium">Thời gian còn lại:</span>
-                <span id="key-expiry-info" class="text-sm text-red-300 font-bold">...</span>
-            </p>
-            <p class="text-gray-300 flex justify-between items-center">
-                <span class="font-medium">FPS:</span>
-                <span id="fps-value" class="text-sm text-red-300 font-bold">...</span>
-            </p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div class="feature-card p-4 space-y-4">
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                        <span class="feature-icon">🚀</span>
-                        <span>FPS BOOSTER</span>
-                    </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="FPS Booster">
-                        <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
-                    </label>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                        <span class="feature-icon">⚙️</span>
-                        <span>PERFORMANCE OPTIMIZER</span>
-                    </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Performance Optimizer">
-                        <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
-                    </label>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                        <span class="feature-icon">🎮</span>
-                        <span>GAME MODE</span>
-                    </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Game Mode">
-                        <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
-                    </label>
-                </div>
+        <div class="scrollable-content">
+            <div class="text-center mb-8">
+                <img src="https://i.postimg.cc/4NFC1Kpc/IMG-2417.jpg" alt="Naruto Shippuden Logo" class="naruto-logo">
+                <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">
+                    NARUTO SHIPPUDEN
+                </h1>
+                <p class="text-gray-400 text-sm mt-2">PANNEL BY NARUTO SHIPPUDEN</p>
             </div>
 
-            <div class="feature-card p-4 space-y-4">
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                        <span class="feature-icon">🎯</span>
-                        <span>AIMLOCK</span>
-                    </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Aimlock">
-                        <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
-                    </label>
+            <div class="mb-8 p-4 bg-[#282828] rounded-2xl border border-[#333333] text-center">
+                <h2 class="text-xl font-semibold mb-4 text-red-300">Khởi chạy game</h2>
+                <div class="flex items-center justify-center space-x-4 mb-4">
+                    <img id="game-icon" src="https://i.postimg.cc/N0LYBt0W/IMG-2291.jpg" alt="Logo Garena Free Fire" class="h-10 w-10 md:h-12 md:w-12 rounded-lg transform hover:scale-110 transition-transform duration-300">
                 </div>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                        <span class="feature-icon">🔒</span>
-                        <span>HEADLOCK</span>
-                    </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Headlock">
-                        <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
-                    </label>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                        <span class="feature-icon">✨</span>
-                        <span>SUPERLOCK</span>
-                    </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Superlock">
-                        <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
-                    </label>
-                </div>
+                <button id="open-game-button" class="main-button text-white font-extrabold w-full py-4 rounded-full flex items-center justify-center space-x-2">
+                    <span id="button-text" class="text-lg">Tối ưu</span>
+                    <div id="loading-spinner" class="loading-spinner hidden"></div>
+                </button>
+            </div>
+
+            <div class="mb-8 p-4 bg-[#282828] rounded-2xl border border-[#333333] space-y-3">
+                <p class="text-gray-300 flex justify-between items-center">
+                    <span class="font-medium">Thiết Bị:</span>
+                    <span id="device-info" class="text-sm text-red-300 font-bold">...</span>
+                </p>
+                <p class="text-gray-300 flex justify-between items-center">
+                    <span class="font-medium">UID:</span>
+                    <span id="uid-info" class="text-sm text-red-300 font-bold">...</span>
+                </p>
+                <p class="text-gray-300 flex justify-between items-center">
+                    <span class="font-medium">Pin:</span>
+                    <span id="battery-info" class="text-sm text-red-300 font-bold">...</span>
+                </p>
+                <p class="text-gray-300 flex justify-between items-center">
+                    <span class="font-medium">Thời gian còn lại:</span>
+                    <span id="key-expiry-info" class="text-sm text-red-300 font-bold">...</span>
+                </p>
+                <p class="text-gray-300 flex justify-between items-center">
+                    <span class="font-medium">FPS:</span>
+                    <span id="fps-value" class="text-sm text-red-300 font-bold">...</span>
+                </p>
             </div>
             
-            <div class="feature-card p-4 space-y-4">
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                        <span class="feature-icon">🏎️</span>
-                        <span>TURBO BOOST</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="feature-card p-4 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <span class="feature-icon">🚀</span>
+                            <span>FPS BOOSTER</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="FPS Booster">
+                            <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
+                        </label>
                     </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Turbo Boost">
-                        <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
-                    </label>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                        <span class="feature-icon">⚡</span>
-                        <span>LAG FIXER</span>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <span class="feature-icon">⚙️</span>
+                            <span>PERFORMANCE OPTIMIZER</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Performance Optimizer">
+                            <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
+                        </label>
                     </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Lag Fixer">
-                        <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
-                    </label>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                        <span class="feature-icon">🌟</span>
-                        <span>SMOOTH PLAY</span>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <span class="feature-icon">🎮</span>
+                            <span>GAME MODE</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Game Mode">
+                            <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
+                        </label>
                     </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Smooth Play">
-                        <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
-                    </label>
                 </div>
-            </div>
 
-            <div class="feature-card p-4 space-y-4">
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                        <span class="feature-icon">🖼️</span>
-                        <span>FAST RENDER</span>
+                <div class="feature-card p-4 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <span class="feature-icon">🎯</span>
+                            <span>AIMLOCK</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Aimlock">
+                            <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
+                        </label>
                     </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Fast Render">
-                        <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
-                    </label>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <span class="feature-icon">🔒</span>
+                            <span>HEADLOCK</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Headlock">
+                            <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
+                        </label>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <span class="feature-icon">✨</span>
+                            <span>SUPERLOCK</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Superlock">
+                            <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
+                        </label>
+                    </div>
                 </div>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                        <span class="feature-icon">🎨</span>
-                        <span>OPTIMIZE GRAPHICS</span>
+                
+                <div class="feature-card p-4 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <span class="feature-icon">🏎️</span>
+                            <span>TURBO BOOST</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Turbo Boost">
+                            <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
+                        </label>
                     </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Optimize Graphics">
-                        <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
-                    </label>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <span class="feature-icon">⚡</span>
+                            <span>LAG FIXER</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Lag Fixer">
+                            <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
+                        </label>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <span class="feature-icon">🌟</span>
+                            <span>SMOOTH PLAY</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Smooth Play">
+                            <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
+                        </label>
+                    </div>
                 </div>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                        <span class="feature-icon">📈</span>
-                        <span>HIGH PERFORMANCE</span>
+
+                <div class="feature-card p-4 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <span class="feature-icon">🖼️</span>
+                            <span>FAST RENDER</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Fast Render">
+                            <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
+                        </label>
                     </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="High Performance">
-                        <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
-                    </label>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <span class="feature-icon">🎨</span>
+                            <span>OPTIMIZE GRAPHICS</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="Optimize Graphics">
+                            <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
+                        </label>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <span class="feature-icon">📈</span>
+                            <span>HIGH PERFORMANCE</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer toggle-feature" data-feature-name="High Performance">
+                            <div class="w-12 h-6 rounded-full peer toggle-switch-bg checked:bg-red-500 peer-focus:ring-2 peer-focus:ring-red-300 after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
+                        </label>
+                    </div>
                 </div>
             </div>
+            <button id="close-panel-bottom" class="bg-gray-700 hover:bg-gray-600 text-white font-bold w-full py-3 mt-4 rounded-full transition-colors duration-200">
+                Đóng Menu
+            </button>
         </div>
-        <button id="close-panel-bottom" class="bg-gray-700 hover:bg-gray-600 text-white font-bold w-full py-3 mt-4 rounded-full transition-colors duration-200">
-            Đóng Menu
-        </button>
     </div>
 
     <div class="bottom-nav">
@@ -301,6 +304,9 @@
         const submitKeyBtn = document.getElementById('submit-key-button');
         const keyStatusMessage = document.getElementById('key-status-message');
         const keyExpiryInfo = document.getElementById('key-expiry-info');
+        
+        // Thêm biến để kiểm soát trạng thái các nút bật/tắt
+        let isFeaturesEnabled = false;
 
         function showMessage(message) {
             const messageBox = document.getElementById('message-box');
@@ -316,20 +322,30 @@
         function openGame() {
             const game = gameData.freefire;
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            const startTime = Date.now();
+            
+            // Cố gắng mở deeplink
+            const deepLinkTimeout = setTimeout(() => {
+                // Nếu chưa chuyển hướng (thường xảy ra khi deeplink không hoạt động),
+                // chúng ta sẽ hiển thị thông báo và chuyển hướng đến trang tải game.
+                showMessage("Không tìm thấy game, vui lòng cài đặt Garena Free Fire.");
+                
+                // Mở game trên Android
+                if (/android/i.test(userAgent)) {
+                    window.location.href = game.androidFallback;
+                // Mở game trên iOS
+                } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    window.location.href = game.iosFallback;
+                // Các thiết bị khác sẽ được chuyển hướng đến Android fallback mặc định
+                } else {
+                     window.location.href = game.androidFallback;
+                }
+            }, 1500); // Tăng thời gian chờ lên 1.5 giây
+
+            // Mở deeplink ngay lập tức
             window.location.href = game.deepLink;
             
-            setTimeout(() => {
-                const elapsedTime = Date.now() - startTime;
-                if (elapsedTime < 2000) {
-                    if (/android/i.test(userAgent)) {
-                        window.location.href = game.androidFallback;
-                    } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                        window.location.href = game.iosFallback;
-                    }
-                }
-            }, 1500);
-            showMessage(`Đã Tối Ưu Thành Công ${game.name}. Vui Lòng Vào Game Trải Nghiệm Và Gửi Feedback Qua Cho Admin`);
+            // Nếu người dùng đã cài game, deeplink sẽ hoạt động và clearTimeout sẽ ngăn hàm fallback chạy
+            window.addEventListener('blur', () => clearTimeout(deepLinkTimeout));
         }
         
         document.getElementById('open-game-button').addEventListener('click', function() {
@@ -343,12 +359,21 @@
                 openButton.disabled = true;
                 startOptimization();
             } else {
+                showMessage(`Đã Tối Ưu Thành Công Garena Free Fire. Vui Lòng Vào Game Trải Nghiệm Và Gửi Feedback Qua Cho Admin`);
                 openGame();
             }
         });
 
         document.querySelectorAll('.toggle-feature').forEach(toggle => {
-            toggle.addEventListener('change', function() {
+            toggle.addEventListener('change', function(event) {
+                // Chỉ cho phép bật/tắt khi đã tối ưu xong
+                if (!isFeaturesEnabled) {
+                    event.preventDefault(); // Ngăn hành vi mặc định
+                    this.checked = false; // Đảm bảo nút quay về trạng thái cũ
+                    showMessage("Vui lòng bấm 'Tối ưu' trước khi kích hoạt các tính năng.");
+                    return;
+                }
+                
                 const featureName = this.dataset.featureName;
                 if (this.checked) {
                     const originalParent = this.parentElement;
@@ -380,11 +405,13 @@
                     if (index === toggles.length - 1) {
                          setTimeout(() => {
                             isOptimized = true;
+                            isFeaturesEnabled = true; // Kích hoạt các nút sau khi tối ưu xong
                             loadingSpinner.classList.add('hidden');
                             buttonText.textContent = "Mở Garena Free Fire";
                             openButton.disabled = false;
-                            showMessage("Đã tối ưu xong");
+                            showMessage("Đã tối ưu xong. Các tính năng đã được kích hoạt!");
                             
+                            // Tự động mở game sau 1 giây khi tối ưu xong
                             setTimeout(() => {
                                 openGame();
                             }, 1000);
@@ -506,7 +533,8 @@
         });
 
         navAdminBtn.addEventListener('click', () => {
-            window.location.href = 'https://zalo.me/0899035561';
+            // Thay đổi URL theo yêu cầu
+            window.location.href = 'https://linkbio.co/anhquan1';
         });
 
         submitKeyBtn.addEventListener('click', () => {
