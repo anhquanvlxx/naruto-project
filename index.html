@@ -7,29 +7,42 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Orbitron', sans-serif; background: #0d0d0d; color: #e0e0e0; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; position: relative; }
-        .panel-bg { position: relative; background: #1a1a1a; border: 2px solid #333333; border-radius: 2rem 2rem 0 2rem; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; margin-bottom: 80px; }
+        @keyframes glow-red {
+            0%, 100% { box-shadow: 0 0 5px rgba(255, 0, 0, 0.5), 0 0 10px rgba(255, 0, 0, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.6); }
+        }
+        @keyframes border-glow {
+            0%, 100% { border-color: #ff0000; }
+            50% { border-color: #ff6666; }
+        }
+        @keyframes bg-glow {
+            0%, 100% { background-color: #1a1a1a; }
+            50% { background-color: #2a0000; }
+        }
+        body { font-family: 'Orbitron', sans-serif; background: #000; color: #e0e0e0; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; position: relative; }
+        .panel-bg { position: relative; background: #1a1a1a; border: 2px solid #333333; border-radius: 2rem 2rem 0 2rem; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; margin-bottom: 80px; animation: bg-glow 5s infinite; }
         .panel-bg::after { content: ''; position: absolute; bottom: -15px; left: 20px; width: 30px; height: 30px; background: #1a1a1a; transform: rotate(45deg); z-index: -1; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); border-bottom-right-radius: 5px; }
-        .main-button { background: linear-gradient(135deg, #ff0000, #b30000); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); }
-        .main-button:hover:not(:disabled) { background: linear-gradient(135deg, #ff3333, #e60000); box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); }
-        .main-button:disabled { background: #333; cursor: not-allowed; color: #999; }
-        .feature-card { background: #282828; border-radius: 1rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); border: 1px solid #333333; }
+        .main-button { background: linear-gradient(135deg, #ff0000, #b30000); transition: all 0.3s ease; animation: glow-red 2s infinite ease-in-out; }
+        .main-button:hover:not(:disabled) { background: linear-gradient(135deg, #ff3333, #e60000); box-shadow: 0 0 25px rgba(255, 0, 0, 0.8), 0 0 40px rgba(255, 0, 0, 0.6); }
+        .main-button:disabled { background: #333; cursor: not-allowed; color: #999; animation: none; }
+        .feature-card { background: #222; border-radius: 1rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); border: 1px solid #444; }
         .feature-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem; transition: transform 0.2s, background-color 0.2s; cursor: pointer; border-radius: 0.75rem; }
-        .feature-item:hover { background-color: #333333; transform: scale(1.05); }
-        .feature-item:active { transform: scale(0.95); }
+        .feature-item:hover { background-color: #333; transform: scale(1.02); }
+        .feature-item:active { transform: scale(0.98); }
         .feature-icon { color: #ff6666; font-size: 1.5rem; margin-right: 0.75rem; }
-        .toggle-switch-bg { background-color: #333333; transition: background-color 0.3s; }
-        .peer:checked ~ .toggle-switch-bg { background-color: #ff0000; }
+        .toggle-switch-bg { background-color: #444; transition: background-color 0.3s; }
+        .peer:checked ~ .toggle-switch-bg { background-color: #ff0000; animation: glow-red 1.5s infinite; }
         .loading-spinner { border: 4px solid rgba(255, 255, 255, 0.3); border-top: 4px solid #fff; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .message-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #1a1a1a; padding: 2rem; border-radius: 1rem; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); z-index: 1000; text-align: center; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 999; }
+        .message-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #1a1a1a; padding: 2rem; border-radius: 1rem; box-shadow: 0 0 25px rgba(255, 0, 0, 0.7); z-index: 1000; text-align: center; border: 2px solid #ff0000; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 999; }
         .menu-closed { display: none; }
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1a1a1a; padding: 0.5rem 0; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333333; z-index: 900; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #111; padding: 0.5rem 0; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333; z-index: 900; }
         .bottom-nav button { background-color: transparent; border: none; color: #e0e0e0; padding: 0.75rem 1rem; font-size: 0.875rem; font-weight: bold; transition: color 0.2s; cursor: pointer; }
         .bottom-nav button:hover { color: #ff0000; }
-        .naruto-logo { width: auto; height: 60px; margin: 0 auto 0.5rem auto; }
-        .scrollable-content { overflow-y: auto; max-height: calc(100vh - 150px); /* Adjust height as needed */ }
+        .naruto-logo { width: auto; height: 60px; margin: 0 auto 0.5rem auto; filter: drop-shadow(0 0 5px #ff0000); }
+        .scrollable-content { overflow-y: auto; max-height: calc(100vh - 150px); }
+        input[type="text"] { animation: border-glow 3s infinite; }
     </style>
 </head>
 <body class="flex flex-col items-center justify-start min-h-screen p-4">
@@ -49,7 +62,7 @@
             <p class="text-gray-400 text-sm mt-2">Vui lòng nhập key để truy cập</p>
         </div>
         <div class="space-y-4">
-            <input type="text" id="key-input" placeholder="Nhập key của bạn" class="w-full px-4 py-3 rounded-full bg-[#1a1a1a] border border-[#333333] text-white placeholder-gray-500 text-center focus:outline-none focus:ring-2 focus:ring-red-500">
+            <input type="text" id="key-input" placeholder="Nhập key của bạn" class="w-full px-4 py-3 rounded-full bg-[#1a1a1a] border border-[#ff0000] text-white placeholder-gray-500 text-center focus:outline-none focus:ring-2 focus:ring-red-500">
             <button id="submit-key-button" class="main-button text-white font-extrabold w-full py-4 rounded-full flex items-center justify-center space-x-2">
                 <span id="key-button-text" class="text-lg">Kích hoạt</span>
                 <div id="key-loading-spinner" class="loading-spinner hidden"></div>
@@ -282,9 +295,6 @@
             freefire: {
                 name: "Garena Free Fire",
                 deepLink: "freefire://",
-                androidFallback: "https://play.google.com/store/apps/details?id=com.dts.freefireth",
-                iosFallback: "https://apps.apple.com/us/app/garena-free-fire-anniversary/id1300146617",
-                icon: "https://i.postimg.cc/N0LYBt0W/IMG-2291.jpg"
             }
         };
 
@@ -305,7 +315,6 @@
         const keyStatusMessage = document.getElementById('key-status-message');
         const keyExpiryInfo = document.getElementById('key-expiry-info');
         
-        // Thêm biến để kiểm soát trạng thái các nút bật/tắt
         let isFeaturesEnabled = false;
 
         function showMessage(message) {
@@ -321,30 +330,11 @@
 
         function openGame() {
             const game = gameData.freefire;
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            
-            // Cố gắng mở deeplink
             const deepLinkTimeout = setTimeout(() => {
-                // Nếu chưa chuyển hướng (thường xảy ra khi deeplink không hoạt động),
-                // chúng ta sẽ hiển thị thông báo và chuyển hướng đến trang tải game.
                 showMessage("Không tìm thấy game, vui lòng cài đặt Garena Free Fire.");
-                
-                // Mở game trên Android
-                if (/android/i.test(userAgent)) {
-                    window.location.href = game.androidFallback;
-                // Mở game trên iOS
-                } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                    window.location.href = game.iosFallback;
-                // Các thiết bị khác sẽ được chuyển hướng đến Android fallback mặc định
-                } else {
-                     window.location.href = game.androidFallback;
-                }
-            }, 1500); // Tăng thời gian chờ lên 1.5 giây
+            }, 1500);
 
-            // Mở deeplink ngay lập tức
             window.location.href = game.deepLink;
-            
-            // Nếu người dùng đã cài game, deeplink sẽ hoạt động và clearTimeout sẽ ngăn hàm fallback chạy
             window.addEventListener('blur', () => clearTimeout(deepLinkTimeout));
         }
         
@@ -366,10 +356,9 @@
 
         document.querySelectorAll('.toggle-feature').forEach(toggle => {
             toggle.addEventListener('change', function(event) {
-                // Chỉ cho phép bật/tắt khi đã tối ưu xong
                 if (!isFeaturesEnabled) {
-                    event.preventDefault(); // Ngăn hành vi mặc định
-                    this.checked = false; // Đảm bảo nút quay về trạng thái cũ
+                    event.preventDefault();
+                    this.checked = false;
                     showMessage("Vui lòng bấm 'Tối ưu' trước khi kích hoạt các tính năng.");
                     return;
                 }
@@ -405,13 +394,12 @@
                     if (index === toggles.length - 1) {
                          setTimeout(() => {
                             isOptimized = true;
-                            isFeaturesEnabled = true; // Kích hoạt các nút sau khi tối ưu xong
+                            isFeaturesEnabled = true;
                             loadingSpinner.classList.add('hidden');
                             buttonText.textContent = "Mở Garena Free Fire";
                             openButton.disabled = false;
                             showMessage("Đã tối ưu xong. Các tính năng đã được kích hoạt!");
                             
-                            // Tự động mở game sau 1 giây khi tối ưu xong
                             setTimeout(() => {
                                 openGame();
                             }, 1000);
@@ -533,7 +521,6 @@
         });
 
         navAdminBtn.addEventListener('click', () => {
-            // Thay đổi URL theo yêu cầu
             window.location.href = 'https://linkbio.co/anhquan1';
         });
 
